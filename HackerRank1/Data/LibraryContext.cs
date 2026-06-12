@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryService.WebAPI.Data
@@ -11,17 +12,25 @@ namespace LibraryService.WebAPI.Data
 
         public DbSet<Library> Libraries { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Fraud> Frauds { get; set; }
+    }
+
+    public class Fraud
+    {
+        [Key]
+        public int Id { get; set; }
+        public string ImpostorDetails { get; set; }
+        public string ContactInfo { get; set; }
+        public string Comments { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 
     public class Book
     {
         [Key]
         public int Id { get; set; }
-
         public string Name { get; set; }
-
         public string Category { get; set; }
-
         public int LibraryId { get; set; }
         public virtual Library Library { get; set; }
     }
@@ -30,9 +39,7 @@ namespace LibraryService.WebAPI.Data
     {
         [Key]
         public int Id { get; set; }
-
         public string Name { get; set; }
-
         public string Location { get; set; }
     }
 }
